@@ -7,6 +7,9 @@ default:
 
   install:
     - Vostok.Airlock.Client/bin/Release/netstandard2.0/Vostok.Airlock.Client.dll
+    - module vostok.core
+    - module vostok.clusterclient
+    - module vostok.clusterclient.transport.http
 
   deps:
     - vostok.core
