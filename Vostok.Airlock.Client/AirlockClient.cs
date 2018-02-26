@@ -6,22 +6,22 @@ using Vostok.Logging.Logs;
 
 namespace Vostok.Airlock
 {
-    public class AirlockClient : IAirlockClient, IDisposable
+    public class AirlockClient : IAirlockClient
     {
+        public AirlockClientCounters Counters { get; }
         private readonly AirlockConfig config;
         private readonly MemoryManager memoryManager;
         private readonly RecordWriter recordWriter;
         private readonly ConcurrentDictionary<string, IBufferPool> bufferPools;
         private readonly DataSenderDaemon dataSenderDaemon;
-        private readonly AtomicLong lostItemsCounter;
-        private readonly AtomicLong sentItemsCounter;
         private readonly ILog log;
 
         private readonly AtomicBoolean isDisposed;
         private readonly AtomicBoolean pushAfterDisposeLogged;
 
-        public AirlockClient(AirlockConfig config, ILog log = null)
+        public AirlockClient(AirlockConfig config, ILog log = null, AirlockClientCounters counters = null)
         {
+            Counters = counters ?? new AirlockClientCounters();
             AirlockConfigValidator.Validate(config);
 
             this.config = config;
@@ -34,8 +34,6 @@ namespace Vostok.Airlock
             );
             recordWriter = new RecordWriter(new RecordSerializer(config.MaximumRecordSize, log));
             bufferPools = new ConcurrentDictionary<string, IBufferPool>();
-            lostItemsCounter = new AtomicLong(0);
-            sentItemsCounter = new AtomicLong(0);
 
             var requestSender = new RequestSender(config, log);
             var commonBatchBuffer = new byte[config.MaximumBatchSizeToSend.Bytes];
@@ -49,18 +47,13 @@ namespace Vostok.Airlock
                 dataBatchesFactory,
                 requestSender,
                 log,
-                lostItemsCounter,
-                sentItemsCounter
+                Counters
             );
 
             dataSenderDaemon = new DataSenderDaemon(dataSender, config, log);
             isDisposed = new AtomicBoolean(false);
             pushAfterDisposeLogged = new AtomicBoolean(false);
         }
-
-        public long LostItemsCount => lostItemsCounter.Value;
-
-        public long SentItemsCount => sentItemsCounter.Value;
 
         public void Push<T>(string routingKey, T item, DateTimeOffset? timestamp = null)
         {
@@ -79,7 +72,7 @@ namespace Vostok.Airlock
                 timestamp ?? DateTimeOffset.UtcNow,
                 ObtainBufferPool(routingKey)))
             {
-                lostItemsCounter.Increment();
+                Counters.LostItems.Add();
             }
         }
 

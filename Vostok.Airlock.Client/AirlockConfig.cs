@@ -28,5 +28,9 @@ namespace Vostok.Airlock
         public TimeSpan RequestTimeout { get; set; } = 30.Seconds();
 
         public bool EnableTracing { get; set; } = false;
+
+        public int? Parallelism { get; set; } = 1;
+
+        public bool EnableMetrics { get; set; } = false;
     }
 }

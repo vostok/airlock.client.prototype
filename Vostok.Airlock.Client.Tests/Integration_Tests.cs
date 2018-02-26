@@ -47,9 +47,12 @@ namespace Vostok.Airlock.Client.Tests
                 foreach (var @event in events)
                     airlockClient.Push(routingKey, @event, getTimestamp(@event));
             }
-            log.Debug($"SentItemsCount: {airlockClient.SentItemsCount}, LostItemsCount: {airlockClient.LostItemsCount}, Elapsed: {sw.Elapsed}");
-            airlockClient.LostItemsCount.Should().Be(0);
-            airlockClient.SentItemsCount.Should().Be(events.Length);
+
+            var lostItems = airlockClient.Counters.LostItems.GetValue();
+            var sentItems = airlockClient.Counters.SentItems.GetValue();
+            log.Debug($"SentItemsCount: {sentItems}, LostItemsCount: {lostItems}, Elapsed: {sw.Elapsed}");
+            lostItems.Should().Be(0);
+            sentItems.Should().Be(events.Length);
         }
 
         private ParallelAirlockClient CreateAirlockClient()

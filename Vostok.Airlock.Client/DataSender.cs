@@ -12,22 +12,19 @@ namespace Vostok.Airlock
         private readonly IDataBatchesFactory batchesFactory;
         private readonly IRequestSender requestSender;
         private readonly ILog log;
-        private readonly AtomicLong lostItemsCounter;
-        private readonly AtomicLong sentItemsCounter;
+        private readonly AirlockClientCounters counters;
         private readonly BufferSliceTracker slicesTracker;
 
         public DataSender(
             IDataBatchesFactory batchesFactory, 
             IRequestSender requestSender, 
-            ILog log, 
-            AtomicLong lostItemsCounter,
-            AtomicLong sentItemsCounter)
+            ILog log,
+            AirlockClientCounters counters)
         {
             this.batchesFactory = batchesFactory;
             this.requestSender = requestSender;
             this.log = log;
-            this.lostItemsCounter = lostItemsCounter;
-            this.sentItemsCounter = sentItemsCounter;
+            this.counters = counters;
 
             slicesTracker = new BufferSliceTracker();
         }
@@ -47,11 +44,14 @@ namespace Vostok.Airlock
                 if (result == RequestSendResult.IntermittentFailure)
                     return DataSendResult.Backoff;
 
+                log.Info("counters = " + counters);
+                log.Info("counters.SentItems = " + counters.SentItems);
+                log.Info("batch = " + batch);
                 if (result == RequestSendResult.Success)
-                    sentItemsCounter.Add(batch.ItemsCount);
+                    counters.SentItems.Add(batch.ItemsCount);
 
                 if (result == RequestSendResult.DefinitiveFailure)
-                    lostItemsCounter.Add(batch.ItemsCount);
+                    counters.LostItems.Add(batch.ItemsCount);
                 
                 TryDiscardSnapshots(batch);
             }
