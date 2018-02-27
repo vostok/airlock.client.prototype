@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Vstk.Airlock</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Vstk.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vstk.core\Vstk.Core\bin\Release\netstandard2.0\Vstk.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Vstk.ClusterClient">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vstk.clusterclient\Vstk.ClusterClient\bin\Release\netstandard2.0\Vstk.ClusterClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Vstk.ClusterClient.Transport.Http">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\vstk.clusterclient.transport.http\Vstk.ClusterClient.Transport.Http\bin\Release\netstandard2.0\Vstk.ClusterClient.Transport.Http.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
