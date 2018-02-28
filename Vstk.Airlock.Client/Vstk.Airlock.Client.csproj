@@ -2,8 +2,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Vostok team</Authors>
+    <Company>SKB Kontur</Company>
+    <Product>Vostok</Product>
     <RootNamespace>Vstk.Airlock</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Copyright>Copyright © SKB Kontur 2017-2018</Copyright>
+    <PackageProjectUrl>https://github.com/vostok/vstk.airlock.client</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/vostok/vstk.airlock.client/blob/master/LICENSE</PackageLicenseUrl>
+    <Description>Client to airlock gate, see http://vostok.tools/</Description>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Vstk.Core">
