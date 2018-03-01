@@ -31,6 +31,6 @@ namespace Vostok.Airlock
 
         public int? Parallelism { get; set; } = 1;
 
-        public bool EnableMetrics { get; set; } = false;
+        public bool EnableMetrics { get; set; } = true;
     }
 }
