@@ -12,7 +12,6 @@ namespace Vostok.Airlock.Client.Tests
     internal class BufferSliceFactory_Tests
     {
         private Buffer buffer;
-        private BufferSliceFactory factory;
         private RecordSerializer recordSerializer;
         private StringSerializer itemSerializer;
         private int totalLength;
@@ -21,7 +20,6 @@ namespace Vostok.Airlock.Client.Tests
         public void TestSetup()
         {
             buffer = new Buffer(new BinaryBufferWriter(64), new MemoryManager(long.MaxValue, 64));
-            factory = new BufferSliceFactory();
 
             totalLength = 0;
             recordSerializer = new RecordSerializer(1.Terabytes(), new ConsoleLog());
@@ -31,7 +29,7 @@ namespace Vostok.Airlock.Client.Tests
         [Test]
         public void Should_return_empty_buffer_as_single_slice()
         {
-            var slice = factory.Cut(buffer, 32).Should().ContainSingle().Which;
+            var slice = BufferSliceFactory.Cut(buffer, 32).Should().ContainSingle().Which;
 
             slice.Buffer.Should().BeSameAs(buffer);
             slice.Offset.Should().Be(0);
@@ -48,7 +46,7 @@ namespace Vostok.Airlock.Client.Tests
 
             buffer.MakeSnapshot();
 
-            factory.Cut(buffer, totalLength)
+            BufferSliceFactory.Cut(buffer, totalLength)
                 .Should()
                 .ContainSingle()
                 .Which
@@ -63,7 +61,7 @@ namespace Vostok.Airlock.Client.Tests
 
             buffer.MakeSnapshot();
 
-            Action action = () => factory.Cut(buffer, 5).Count();
+            Action action = () => BufferSliceFactory.Cut(buffer, 5).Count();
 
             Console.Out.WriteLine(action.ShouldThrow<Exception>().Which);
         }
@@ -80,7 +78,7 @@ namespace Vostok.Airlock.Client.Tests
 
             buffer.MakeSnapshot();
 
-            var slices = factory.Cut(buffer, totalLength/3);
+            var slices = BufferSliceFactory.Cut(buffer, totalLength/3);
 
             slices.Should()
                 .Equal(
@@ -102,7 +100,7 @@ namespace Vostok.Airlock.Client.Tests
 
             buffer.MakeSnapshot();
 
-            var slices = factory.Cut(buffer, totalLength/3 + 2);
+            var slices = BufferSliceFactory.Cut(buffer, totalLength/3 + 2);
 
             slices.Should()
                 .Equal(
@@ -124,7 +122,7 @@ namespace Vostok.Airlock.Client.Tests
 
             buffer.MakeSnapshot();
 
-            var slices = factory.Cut(buffer, totalLength/3 - 1).ToArray();
+            var slices = BufferSliceFactory.Cut(buffer, totalLength/3 - 1).ToArray();
 
             slices.Should().HaveCount(6);
 
@@ -150,7 +148,7 @@ namespace Vostok.Airlock.Client.Tests
 
             buffer.MakeSnapshot();
 
-            var slices = factory.Cut(buffer, r1 + r2 + 2);
+            var slices = BufferSliceFactory.Cut(buffer, r1 + r2 + 2);
 
             slices.Should()
                 .Equal(
@@ -174,7 +172,7 @@ namespace Vostok.Airlock.Client.Tests
             WriteRecord("-------");    // outside of snapshot
             WriteRecord("---");        // outside of snapshot
 
-            var slices = factory.Cut(buffer, r1 + r2 + 2);
+            var slices = BufferSliceFactory.Cut(buffer, r1 + r2 + 2);
 
             slices.Should().Equal(
                 new BufferSlice(buffer, 0, r1 + r2, 2),

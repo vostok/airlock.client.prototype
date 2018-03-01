@@ -4,10 +4,10 @@ using Vostok.Commons.Binary;
 
 namespace Vostok.Airlock
 {
-    internal class BufferSliceFactory : IBufferSliceFactory
+    internal class BufferSliceFactory 
     {
         // (iloktionov): Работает в предположении о том, что размер одной записи в буфере не может превышать maximumSliceLength.
-        public IEnumerable<BufferSlice> Cut(IBuffer buffer, int maximumSliceLength)
+        public static IEnumerable<BufferSlice> Cut(IBuffer buffer, int maximumSliceLength)
         {
             if (buffer.SnapshotLength <= maximumSliceLength)
             {

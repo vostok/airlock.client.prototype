@@ -6,16 +6,13 @@ namespace Vostok.Airlock
     internal class DataBatchesFactory : IDataBatchesFactory
     {
         private readonly IReadOnlyDictionary<string, IBufferPool> bufferPools;
-        private readonly IBufferSliceFactory bufferSliceFactory;
         private readonly byte[] messageBuffer;
 
         public DataBatchesFactory(
             IReadOnlyDictionary<string, IBufferPool> bufferPools, 
-            IBufferSliceFactory bufferSliceFactory, 
             byte[] messageBuffer)
         {
             this.bufferPools = bufferPools;
-            this.bufferSliceFactory = bufferSliceFactory;
             this.messageBuffer = messageBuffer;
         }
 
@@ -52,7 +49,7 @@ namespace Vostok.Airlock
 
                 foreach (var buffer in snapshot)
                 {
-                    foreach (var slice in bufferSliceFactory.Cut(buffer, maximumSliceLength))
+                    foreach (var slice in BufferSliceFactory.Cut(buffer, maximumSliceLength))
                     {
                         yield return (routingKey, slice);
                     }

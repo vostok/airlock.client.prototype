@@ -1,58 +1,52 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using Vostok.Commons.Synchronization;
 using Vostok.Logging;
 using Vostok.Logging.Logs;
+using Vstk.Metrics;
 
 namespace Vostok.Airlock
 {
     public class AirlockClient : IAirlockClient
     {
         public AirlockClientCounters Counters { get; }
-        private readonly AirlockConfig config;
-        private readonly MemoryManager memoryManager;
-        private readonly RecordWriter recordWriter;
-        private readonly ConcurrentDictionary<string, IBufferPool> bufferPools;
-        private readonly DataSenderDaemon dataSenderDaemon;
         private readonly ILog log;
 
         private readonly AtomicBoolean isDisposed;
         private readonly AtomicBoolean pushAfterDisposeLogged;
+        private readonly InternalAirlockClient[] airlockClients;
+        private readonly int parallelizm;
 
-        public AirlockClient(AirlockConfig config, ILog log = null, AirlockClientCounters counters = null)
+        public AirlockClient(AirlockConfig config, ILog log = null, IMetricScope metricScope = null)
         {
-            Counters = counters ?? new AirlockClientCounters();
+            Counters = new AirlockClientCounters();
             AirlockConfigValidator.Validate(config);
-
-            this.config = config;
 
             this.log = log = (log ?? new SilentLog()).ForContext(this);
 
-            memoryManager = new MemoryManager(
+            var memoryManager = new MemoryManager(
                 config.MaximumMemoryConsumption.Bytes,
                 (int) config.InitialPooledBufferSize.Bytes
             );
-            recordWriter = new RecordWriter(new RecordSerializer(config.MaximumRecordSize, log));
-            bufferPools = new ConcurrentDictionary<string, IBufferPool>();
+            var recordWriter = new RecordWriter(new RecordSerializer(config.MaximumRecordSize, log));
 
-            var requestSender = new RequestSender(config, log);
-            var commonBatchBuffer = new byte[config.MaximumBatchSizeToSend.Bytes];
-            var bufferSliceFactory = new BufferSliceFactory();
-            var dataBatchesFactory = new DataBatchesFactory(
-                bufferPools,
-                bufferSliceFactory,
-                commonBatchBuffer
-            );
-            var dataSender = new DataSender(
-                dataBatchesFactory,
-                requestSender,
-                log,
-                Counters
-            );
-
-            dataSenderDaemon = new DataSenderDaemon(dataSender, config, log);
+            parallelizm = config.Parallelism ?? 1;
+            if (parallelizm <= 0)
+                parallelizm = 1;
+            airlockClients = new InternalAirlockClient[parallelizm];
+            for (var i = 0; i < parallelizm; i++)
+            {
+                airlockClients[i] = new InternalAirlockClient(config, this.log, recordWriter, memoryManager, Counters);
+            }
             isDisposed = new AtomicBoolean(false);
             pushAfterDisposeLogged = new AtomicBoolean(false);
+
+            if (config.EnableMetrics)
+            {
+                if (metricScope == null)
+                    log.Error("airlock metrics enabled but metricScope is not provided");
+                else
+                    SetupAirlockMetrics(metricScope);
+            }
         }
 
         public void Push<T>(string routingKey, T item, DateTimeOffset? timestamp = null)
@@ -63,35 +57,40 @@ namespace Vostok.Airlock
                 return;
             }
 
-            if (!AirlockSerializerRegistry.TryGet<T>(out var serializer))
-                return;
-
-            if (!recordWriter.TryWrite(
-                item,
-                serializer,
-                timestamp ?? DateTimeOffset.UtcNow,
-                ObtainBufferPool(routingKey)))
+            if (parallelizm > 1)
+                airlockClients[ThreadSafeRandom.Next(airlockClients.Length)].Push(routingKey, item, timestamp);
+            else
             {
-                Counters.LostItems.Add();
+                airlockClients[0].Push(routingKey, item, timestamp);
             }
         }
 
         public void Dispose()
         {
-            if (isDisposed.TrySetTrue())
+            if (!isDisposed.TrySetTrue())
+                return;
+            foreach (var client in airlockClients)
             {
-                dataSenderDaemon.Dispose();
+                client.Dispose();
             }
         }
 
-        private IBufferPool ObtainBufferPool(string routingKey)
+        private void SetupAirlockMetrics(IMetricScope rootScope)
         {
-            return bufferPools.GetOrAdd(
-                routingKey,
-                _ => new BufferPool(
-                    memoryManager,
-                    config.InitialPooledBuffersCount
-                ));
+            var clock = MetricClocks.Get();
+            var metricScope = rootScope.WithTag(MetricsTagNames.Type, "airlock");
+            clock.Register(
+                timestamp =>
+                {
+                    var lostItems = Counters.LostItems.Reset();
+                    var sentItems = Counters.SentItems.Reset();
+                    metricScope
+                        .WriteMetric()
+                        .SetTimestamp(timestamp)
+                        .SetValue("lost-items", lostItems)
+                        .SetValue("sent-items", sentItems)
+                        .Commit();
+                });
         }
 
         private void LogPushAfterDispose(string routingKey)

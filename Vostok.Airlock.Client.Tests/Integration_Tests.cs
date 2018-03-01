@@ -17,11 +17,10 @@ namespace Vostok.Airlock.Client.Tests
         private readonly ConsoleLog log = new ConsoleLog();
 
         [Test]
-        [Repeat(50)]
         public void PushLogEventsToAirlock()
         {
             var routingKey = RoutingKey.Create("vostok", "ci", "core", RoutingKey.LogsSuffix);
-            var events = GenerateLogEvens(count: 10);
+            var events = GenerateLogEvens(count: 1000000);
             PushToAirlock(routingKey, events, e => e.Timestamp);
         }
 
@@ -41,7 +40,7 @@ namespace Vostok.Airlock.Client.Tests
         {
             log.Debug($"Pushing {events.Length} events to airlock");
             var sw = Stopwatch.StartNew();
-            ParallelAirlockClient airlockClient;
+            IAirlockClient airlockClient;
             using (airlockClient = CreateAirlockClient())
             {
                 foreach (var @event in events)
@@ -55,24 +54,26 @@ namespace Vostok.Airlock.Client.Tests
             sentItems.Should().Be(events.Length);
         }
 
-        private ParallelAirlockClient CreateAirlockClient()
+        private IAirlockClient CreateAirlockClient()
         {
             var airlockConfig = new AirlockConfig
             {
                 ApiKey = "UniversalApiKey",
-                ClusterProvider = new FixedClusterProvider(new Uri("http://vostok.dev.kontur.ru:6306")),
+                ClusterProvider = new FixedClusterProvider(new Uri("http://localhost:6306")),
                 SendPeriod = TimeSpan.FromSeconds(2),
                 SendPeriodCap = TimeSpan.FromMinutes(5),
                 RequestTimeout = TimeSpan.FromSeconds(30),
                 MaximumRecordSize = 1.Kilobytes(),
                 MaximumBatchSizeToSend = 300.Megabytes(),
-                MaximumMemoryConsumption = 300.Megabytes(),
+                MaximumMemoryConsumption = 300.Megabytes()*10,
                 InitialPooledBufferSize = 10.Megabytes(),
                 InitialPooledBuffersCount = 10,
-                EnableTracing = false
+                EnableTracing = false,
+                EnableMetrics = false,
+                Parallelism = 10
             };
-            //return new AirlockClient(airlockConfig, log.FilterByLevel(LogLevel.Warn));
-            return new ParallelAirlockClient(airlockConfig, 10, log.FilterByLevel(LogLevel.Warn));
+            return new AirlockClient(airlockConfig, log.FilterByLevel(LogLevel.Warn));
+            //return new ParallelAirlockClient(airlockConfig, 10, log.FilterByLevel(LogLevel.Warn));
         }
     }
 }
