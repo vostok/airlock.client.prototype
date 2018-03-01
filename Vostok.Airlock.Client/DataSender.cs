@@ -44,9 +44,6 @@ namespace Vostok.Airlock
                 if (result == RequestSendResult.IntermittentFailure)
                     return DataSendResult.Backoff;
 
-                log.Info("counters = " + counters);
-                log.Info("counters.SentItems = " + counters.SentItems);
-                log.Info("batch = " + batch);
                 if (result == RequestSendResult.Success)
                     counters.SentItems.Add(batch.ItemsCount);
 
