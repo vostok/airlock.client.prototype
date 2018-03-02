@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Vostok.Commons;
-using Vostok.Logging;
-using Vostok.Logging.Logs;
+using Vstk.Commons;
+using Vstk.Logging;
+using Vstk.Logging.Logs;
 
-namespace Vostok.Airlock.Logging
+namespace Vstk.Airlock.Logging
 {
     public class AirlockLog : ILog
     {
@@ -27,7 +27,7 @@ namespace Vostok.Airlock.Logging
             {
                 Timestamp = DateTimeOffset.UtcNow, // todo (spaceorc, 15.02.2018) возможно, надо сделать поле Timestamp в logEvent?
                 Level = logEvent.Level,
-                Message = LogEventFormatter.FormatMessage(logEvent.MessageTemplate, logEvent.MessageParameters).Truncate(maxMessageLength),
+                Message = LogEventFormatter.FormatMessage(logEvent.MessageTemplate, logEvent.MessageParameters),
                 Exceptions = logEvent.Exception.Parse(), // todo (andrew, 17.01.2018): maybe truncate if serialized Exceptions list has size > 32 kb
                 Properties = logEvent.Properties.ToDictionary(x => x.Key, x => x.Value.ToString())
             };
