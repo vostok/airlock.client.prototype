@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Vostok.Commons.Synchronization;
+﻿using Vostok.Commons.Synchronization;
 
 namespace Vostok.Airlock
 {

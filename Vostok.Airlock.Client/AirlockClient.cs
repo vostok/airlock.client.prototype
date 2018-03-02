@@ -10,6 +10,7 @@ namespace Vostok.Airlock
     public class AirlockClient : IAirlockClient
     {
         public AirlockClientCounters Counters { get; }
+        internal const short AirlockMessageVersion = 1;
         private readonly ILog log;
 
         private readonly AtomicBoolean isDisposed;

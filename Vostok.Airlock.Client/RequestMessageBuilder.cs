@@ -50,7 +50,7 @@ namespace Vostok.Airlock
 
         private void WriteVersion()
         {
-            writer.Write((short) 1);
+            writer.Write(AirlockClient.AirlockMessageVersion);
         }
 
         private void WriteGroupsCount()

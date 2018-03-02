@@ -12,11 +12,11 @@ namespace Vostok.Airlock
 {
     public class RequestSender : IRequestSender
     {
-        private readonly AirlockConfig config;
+        private readonly AirlockRequestSenderConfig config;
         private readonly ClusterClient client;
         private readonly ILog log;
 
-        public RequestSender(AirlockConfig config, ILog log)
+        public RequestSender(AirlockRequestSenderConfig config, ILog log)
         {
             this.config = config;
             this.log = log;

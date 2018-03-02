@@ -1,9 +1,7 @@
 ﻿namespace Vostok.Airlock
 {
-    internal interface IMemoryManager
+    internal interface IMemoryManager : IMemoryAllocator
     {
-        bool TryReserveBytes(int amount);
-
         bool TryCreateBuffer(out byte[] buffer);
     }
 }

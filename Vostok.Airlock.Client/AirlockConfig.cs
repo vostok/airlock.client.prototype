@@ -5,12 +5,8 @@ using Vostok.Commons.Model;
 
 namespace Vostok.Airlock
 {
-    public class AirlockConfig
+    public class AirlockConfig : AirlockRequestSenderConfig
     {
-        public IClusterProvider ClusterProvider { get; set; }
-
-        public string ApiKey { get; set; }
-
         public DataSize MaximumRecordSize { get; set; } = 1.Megabytes();
 
         public DataSize MaximumMemoryConsumption { get; set; } = 128.Megabytes();
@@ -24,10 +20,6 @@ namespace Vostok.Airlock
         public TimeSpan SendPeriod { get; set; } = 2.Seconds();
 
         public TimeSpan SendPeriodCap { get; set; } = 5.Minutes();
-
-        public TimeSpan RequestTimeout { get; set; } = 30.Seconds();
-
-        public bool EnableTracing { get; set; } = false;
 
         public int? Parallelism { get; set; } = 1;
 

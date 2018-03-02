@@ -8,13 +8,13 @@ namespace Vostok.Airlock
     internal class Buffer : IBuffer, IBinaryWriter
     {
         private readonly BinaryBufferWriter binaryWriter;
-        private readonly IMemoryManager memoryManager;
+        private readonly IMemoryAllocator memoryAllocator;
         private AirlockWriteStream writeStream;
 
-        public Buffer(BinaryBufferWriter binaryWriter, IMemoryManager memoryManager)
+        public Buffer(BinaryBufferWriter binaryWriter, IMemoryAllocator memoryAllocator)
         {
             this.binaryWriter = binaryWriter;
-            this.memoryManager = memoryManager;
+            this.memoryAllocator = memoryAllocator;
         }
 
         public int WrittenRecords { get; set; }
@@ -211,7 +211,7 @@ namespace Vostok.Airlock
             var remainingBytes = currentLength - Position;
             var reserveAmount = Math.Max(currentLength, amount - remainingBytes);
 
-            if (!memoryManager.TryReserveBytes(reserveAmount))
+            if (!memoryAllocator.TryReserveBytes(reserveAmount))
                 throw new InternalBufferOverflowException();
         }
 

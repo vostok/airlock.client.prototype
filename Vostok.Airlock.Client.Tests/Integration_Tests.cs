@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
+using MoreLinq;
 using NUnit.Framework;
 using Vostok.Airlock.Logging;
 using Vostok.Clusterclient.Topology;
@@ -20,8 +22,19 @@ namespace Vostok.Airlock.Client.Tests
         public void PushLogEventsToAirlock()
         {
             var routingKey = RoutingKey.Create("vostok", "ci", "core", RoutingKey.LogsSuffix);
-            var events = GenerateLogEvens(count: 1000000);
+            var events = GenerateLogEvens(count: 10000);
             PushToAirlock(routingKey, events, e => e.Timestamp);
+        }
+
+        [Test]
+        public void PushBatchLogEventsToAirlock()
+        {
+            var routingKey = RoutingKey.Create("vostok", "ci", "core", RoutingKey.LogsSuffix);
+            var events = GenerateLogEvens(count: 100000);
+            foreach (var batch in events.Batch(10000))
+            {
+                PushBatchToAirlock(routingKey, batch.ToArray(), e => e.Timestamp);
+            }
         }
 
         private static LogEventData[] GenerateLogEvens(int count)
@@ -32,7 +45,8 @@ namespace Vostok.Airlock.Client.Tests
                              {
                                  Message = "Testing AirlockClient" + i,
                                  Level = LogLevel.Debug,
-                                 Timestamp = utcNow.AddSeconds(-i*10)
+                                 Timestamp = utcNow.AddSeconds(-i*10),
+                                 Properties = new Dictionary<string, string>()
                              }).ToArray();
         }
 
@@ -44,7 +58,7 @@ namespace Vostok.Airlock.Client.Tests
             using (airlockClient = CreateAirlockClient())
             {
                 foreach (var @event in events)
-                    airlockClient.Push(routingKey, @event, getTimestamp(@event));
+                    airlockClient.Push(routingKey, @event);
             }
 
             var lostItems = airlockClient.Counters.LostItems.GetValue();
@@ -54,7 +68,28 @@ namespace Vostok.Airlock.Client.Tests
             sentItems.Should().Be(events.Length);
         }
 
+        private void PushBatchToAirlock<T>(string routingKey, T[] events, Func<T, DateTimeOffset> getTimestamp)
+        {
+            log.Debug($"Pushing {events.Length} events to airlock");
+            var sw = Stopwatch.StartNew();
+            var airlockClient = CreateBatchAirlockClient();
+            var eventsBatch = events.Select(x => new Tuple<T, DateTimeOffset>(x, getTimestamp(x))).ToArray();
+            airlockClient.PushAsync(routingKey, eventsBatch).Wait();
+            log.Debug($"SentItemsCount: {events.Length}, Elapsed: {sw.Elapsed}");
+        }
+
         private IAirlockClient CreateAirlockClient()
+        {
+            var airlockConfig = CreateAirlockConfig();
+            return new AirlockClient(airlockConfig, log.FilterByLevel(LogLevel.Warn));
+        }
+        private AirlockBatchClient CreateBatchAirlockClient()
+        {
+            var airlockConfig = CreateAirlockConfig();
+            return new AirlockBatchClient(airlockConfig, log.FilterByLevel(LogLevel.Warn));
+        }
+
+        private static AirlockConfig CreateAirlockConfig()
         {
             var airlockConfig = new AirlockConfig
             {
@@ -72,8 +107,7 @@ namespace Vostok.Airlock.Client.Tests
                 EnableMetrics = false,
                 Parallelism = 10
             };
-            return new AirlockClient(airlockConfig, log.FilterByLevel(LogLevel.Warn));
-            //return new ParallelAirlockClient(airlockConfig, 10, log.FilterByLevel(LogLevel.Warn));
+            return airlockConfig;
         }
     }
 }
