@@ -2,9 +2,9 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Vstk.Commons.Binary;
+using Vostok.Commons.Binary;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class AirlockWriteStream : Stream
     {

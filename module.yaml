@@ -1,20 +1,20 @@
 default:
   build:
-    target: Vstk.Airlock.Client.sln
+    target: Vostok.Airlock.Client.sln
     configuration: Release
     tool:
       name: dotnet
 
   install:
-    - Vstk.Airlock.Client/bin/Release/netstandard2.0/Vstk.Airlock.Client.dll
-    - module vstk.core
-    - module vstk.clusterclient
-    - module vstk.clusterclient.transport.http
+    - Vostok.Airlock.Client/bin/Release/netstandard2.0/Vostok.Airlock.Client.dll
+    - module vostok.core
+    - module vostok.clusterclient
+    - module vostok.clusterclient.transport.http
 
   deps:
-    - vstk.core
-    - vstk.clusterclient
-    - vstk.clusterclient.transport.http
+    - vostok.core
+    - vostok.clusterclient
+    - vostok.clusterclient.transport.http
 
 notests *default:
   build:

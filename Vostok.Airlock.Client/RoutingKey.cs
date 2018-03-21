@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public static class RoutingKey
     {

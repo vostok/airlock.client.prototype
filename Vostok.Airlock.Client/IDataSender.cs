@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal interface IDataSender
     {

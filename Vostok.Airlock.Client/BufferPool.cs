@@ -1,9 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Vstk.Commons.Binary;
-using Vstk.Commons.Utilities;
+using Vostok.Commons.Binary;
+using Vostok.Commons.Utilities;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class BufferPool : IBufferPool
     {

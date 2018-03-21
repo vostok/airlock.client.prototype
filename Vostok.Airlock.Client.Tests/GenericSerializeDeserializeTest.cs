@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using FluentAssertions;
-using Vstk.Commons.Binary;
+using Vostok.Commons.Binary;
 
-namespace Vstk.Airlock.Client.Tests
+namespace Vostok.Airlock.Client.Tests
 {
     internal static class GenericSerializeDeserializeTest
     {

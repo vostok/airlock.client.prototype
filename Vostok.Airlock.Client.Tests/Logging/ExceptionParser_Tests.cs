@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Vstk.Airlock.Logging;
-using Vstk.Logging;
-using Vstk.Logging.Logs;
+using Vostok.Airlock.Logging;
+using Vostok.Logging;
+using Vostok.Logging.Logs;
 
-namespace Vstk.Airlock.Client.Tests.Logging
+namespace Vostok.Airlock.Client.Tests.Logging
 {
     public class ExceptionParser_Tests
     {

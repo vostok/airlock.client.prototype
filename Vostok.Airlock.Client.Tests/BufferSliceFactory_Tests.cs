@@ -2,11 +2,11 @@
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using Vstk.Commons.Binary;
-using Vstk.Commons.Extensions.UnitConvertions;
-using Vstk.Logging.Logs;
+using Vostok.Commons.Binary;
+using Vostok.Commons.Extensions.UnitConvertions;
+using Vostok.Logging.Logs;
 
-namespace Vstk.Airlock.Client.Tests
+namespace Vostok.Airlock.Client.Tests
 {
     [TestFixture]
     internal class BufferSliceFactory_Tests

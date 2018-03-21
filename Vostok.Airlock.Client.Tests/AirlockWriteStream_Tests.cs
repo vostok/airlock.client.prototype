@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using Vstk.Commons.Binary;
+using Vostok.Commons.Binary;
 
-namespace Vstk.Airlock.Client.Tests
+namespace Vostok.Airlock.Client.Tests
 {
     [TestFixture]
     internal class AirlockWriteStream_Tests

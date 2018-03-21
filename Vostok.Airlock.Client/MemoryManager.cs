@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class MemoryManager : IMemoryManager
     {

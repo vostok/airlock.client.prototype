@@ -1,7 +1,7 @@
 ﻿using System;
-using Vstk.Tracing;
+using Vostok.Tracing;
 
-namespace Vstk.Airlock.Tracing
+namespace Vostok.Airlock.Tracing
 {
     public class AirlockTraceReporter : ITraceReporter
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Vstk.Commons.Binary;
-using Vstk.Tracing;
+using Vostok.Commons.Binary;
+using Vostok.Tracing;
 
-namespace Vstk.Airlock.Tracing
+namespace Vostok.Airlock.Tracing
 {
     public class SpanAirlockSerializer : IAirlockSerializer<Span>, IAirlockDeserializer<Span>
     {

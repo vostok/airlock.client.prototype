@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Vstk.Logging;
+using Vostok.Logging;
 
-namespace Vstk.Airlock.Logging
+namespace Vostok.Airlock.Logging
 {
     public sealed class LogEventData
     {

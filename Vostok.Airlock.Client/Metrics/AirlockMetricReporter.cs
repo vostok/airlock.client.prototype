@@ -1,6 +1,6 @@
-﻿using Vstk.Metrics;
+﻿using Vostok.Metrics;
 
-namespace Vstk.Airlock.Metrics
+namespace Vostok.Airlock.Metrics
 {
     public class AirlockMetricReporter : IMetricEventReporter
     {

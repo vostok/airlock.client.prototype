@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Vstk.Airlock.Client.Tests
+namespace Vostok.Airlock.Client.Tests
 {
     // todo (avk 06.10.2017) add tests for all methods for  case insensetivity
     public class RoutingKey_Tests

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Vstk.Commons;
-using Vstk.Logging;
-using Vstk.Logging.Logs;
+using Vostok.Commons;
+using Vostok.Logging;
+using Vostok.Logging.Logs;
 
-namespace Vstk.Airlock.Logging
+namespace Vostok.Airlock.Logging
 {
     public class AirlockLog : ILog
     {

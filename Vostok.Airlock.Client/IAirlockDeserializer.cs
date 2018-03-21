@@ -1,4 +1,4 @@
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public interface IAirlockDeserializer<out T>
     {

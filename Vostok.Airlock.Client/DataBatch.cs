@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class DataBatch : IDataBatch
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class DataBatchBuildingContext
     {

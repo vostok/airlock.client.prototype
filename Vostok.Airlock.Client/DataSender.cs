@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Vstk.Commons.Extensions.UnitConvertions;
-using Vstk.Commons.Synchronization;
-using Vstk.Logging;
+using Vostok.Commons.Extensions.UnitConvertions;
+using Vostok.Commons.Synchronization;
+using Vostok.Logging;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class DataSender : IDataSender
     {

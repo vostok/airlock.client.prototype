@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal interface IRecordWriter
     {

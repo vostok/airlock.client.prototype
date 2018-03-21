@@ -1,9 +1,9 @@
 ﻿using System;
-using Vstk.Clusterclient.Topology;
-using Vstk.Commons.Extensions.UnitConvertions;
-using Vstk.Commons.Model;
+using Vostok.Clusterclient.Topology;
+using Vostok.Commons.Extensions.UnitConvertions;
+using Vostok.Commons.Model;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public class AirlockConfig
     {

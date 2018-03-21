@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
-using Vstk.Commons.Utilities;
+using Vostok.Commons.Utilities;
 
-namespace Vstk.Airlock.Client.Tests
+namespace Vostok.Airlock.Client.Tests
 {
     [TestFixture]
     internal class BufferSliceTracker_Tests

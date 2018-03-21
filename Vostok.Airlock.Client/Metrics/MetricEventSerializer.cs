@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Vstk.Commons.Binary;
-using Vstk.Metrics;
+using Vostok.Commons.Binary;
+using Vostok.Metrics;
 
-namespace Vstk.Airlock.Metrics
+namespace Vostok.Airlock.Metrics
 {
     public class MetricEventSerializer : IAirlockSerializer<MetricEvent>, IAirlockDeserializer<MetricEvent>
     {

@@ -1,14 +1,14 @@
 using System;
 using System.Threading.Tasks;
-using Vstk.Clusterclient;
-using Vstk.Clusterclient.Model;
-using Vstk.Clusterclient.Ordering.Weighed;
-using Vstk.Clusterclient.Strategies;
-using Vstk.Clusterclient.Transport.Http;
-using Vstk.Commons.Extensions.UnitConvertions;
-using Vstk.Logging;
+using Vostok.Clusterclient;
+using Vostok.Clusterclient.Model;
+using Vostok.Clusterclient.Ordering.Weighed;
+using Vostok.Clusterclient.Strategies;
+using Vostok.Clusterclient.Transport.Http;
+using Vostok.Commons.Extensions.UnitConvertions;
+using Vostok.Logging;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public class RequestSender : IRequestSender
     {

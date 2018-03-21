@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Vstk.Commons.Utilities;
+using Vostok.Commons.Utilities;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class BufferSliceTracker
     {

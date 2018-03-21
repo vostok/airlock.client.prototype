@@ -4,9 +4,9 @@ using System.Linq;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
-using Vstk.Commons.Binary;
+using Vostok.Commons.Binary;
 
-namespace Vstk.Airlock.Client.Tests
+namespace Vostok.Airlock.Client.Tests
 {
     [TestFixture]
     internal class Buffer_Tests

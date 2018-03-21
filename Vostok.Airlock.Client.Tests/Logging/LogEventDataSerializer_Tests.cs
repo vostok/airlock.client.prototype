@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Vstk.Airlock.Logging;
-using Vstk.Logging;
+using Vostok.Airlock.Logging;
+using Vostok.Logging;
 
-namespace Vstk.Airlock.Client.Tests.Logging
+namespace Vostok.Airlock.Client.Tests.Logging
 {
     public class LogEventDataSerializer_Tests
     {

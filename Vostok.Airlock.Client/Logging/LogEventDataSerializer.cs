@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Vstk.Commons.Binary;
-using Vstk.Logging;
+using Vostok.Commons.Binary;
+using Vostok.Logging;
 
-namespace Vstk.Airlock.Logging
+namespace Vostok.Airlock.Logging
 {
     public class LogEventDataSerializer : IAirlockSerializer<LogEventData>, IAirlockDeserializer<LogEventData>
     {

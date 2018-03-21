@@ -1,7 +1,7 @@
 using System.IO;
-using Vstk.Commons.Binary;
+using Vostok.Commons.Binary;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public interface IAirlockSink
     {

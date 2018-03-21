@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
-using Vstk.Commons.Extensions.UnitConvertions;
-using Vstk.Commons.Model;
-using Vstk.Logging;
+using Vostok.Commons.Extensions.UnitConvertions;
+using Vostok.Commons.Model;
+using Vostok.Logging;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class RecordSerializer : IRecordSerializer
     {

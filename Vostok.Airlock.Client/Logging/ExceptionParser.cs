@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Vstk.Airlock.Logging
+namespace Vostok.Airlock.Logging
 {
     // todo (andrew, 17.01.2018): need to test this thoroughly (how all fields are filled with respect to "pdbonly" and "full" debugging information types)
     public static class ExceptionParser

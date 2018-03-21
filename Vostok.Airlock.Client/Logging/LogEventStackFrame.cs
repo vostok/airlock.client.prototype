@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Vstk.Airlock.Logging
+namespace Vostok.Airlock.Logging
 {
     public sealed class LogEventStackFrame
     {

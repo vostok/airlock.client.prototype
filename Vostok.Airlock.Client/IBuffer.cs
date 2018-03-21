@@ -1,4 +1,4 @@
-﻿namespace Vstk.Airlock
+﻿namespace Vostok.Airlock
 {
     internal interface IBuffer : IAirlockSink
     {

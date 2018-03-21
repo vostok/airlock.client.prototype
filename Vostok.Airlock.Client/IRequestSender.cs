@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public interface IRequestSender
     {

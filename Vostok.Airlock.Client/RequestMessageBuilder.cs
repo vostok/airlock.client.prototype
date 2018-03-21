@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
-using Vstk.Commons.Binary;
+using Vostok.Commons.Binary;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class RequestMessageBuilder
     {

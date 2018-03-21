@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Vstk.Logging;
+using Vostok.Logging;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class DataSenderDaemon : IDisposable
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Vstk.Commons.Utilities;
-using Vstk.Logging;
+using Vostok.Commons.Utilities;
+using Vostok.Logging;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public class ParallelAirlockClient : IAirlockClient, IDisposable
     {

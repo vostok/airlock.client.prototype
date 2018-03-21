@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
-using Vstk.Airlock.Logging;
-using Vstk.Airlock.Metrics;
-using Vstk.Airlock.Tracing;
+using Vostok.Airlock.Logging;
+using Vostok.Airlock.Metrics;
+using Vostok.Airlock.Tracing;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public static class AirlockSerializerRegistry
     {

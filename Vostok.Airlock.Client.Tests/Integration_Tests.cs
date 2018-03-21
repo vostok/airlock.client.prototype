@@ -3,13 +3,13 @@ using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using Vstk.Airlock.Logging;
-using Vstk.Clusterclient.Topology;
-using Vstk.Commons.Extensions.UnitConvertions;
-using Vstk.Logging;
-using Vstk.Logging.Logs;
+using Vostok.Airlock.Logging;
+using Vostok.Clusterclient.Topology;
+using Vostok.Commons.Extensions.UnitConvertions;
+using Vostok.Logging;
+using Vostok.Logging.Logs;
 
-namespace Vstk.Airlock.Client.Tests
+namespace Vostok.Airlock.Client.Tests
 {
     [Ignore("Explicit attribute does not work in VS + Resharper")]
     public class Integration_Tests

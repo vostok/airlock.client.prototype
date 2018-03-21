@@ -12,16 +12,16 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Vstk.Airlock.Client\Vstk.Airlock.Client.csproj" />
+    <ProjectReference Include="..\Vostok.Airlock.Client\Vostok.Airlock.Client.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Vstk.Core">
+    <Reference Include="Vostok.Core">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vstk.core\Vstk.Core\bin\Release\netstandard2.0\Vstk.Core.dll</HintPath>
+      <HintPath>..\..\vostok.core\Vostok.Core\bin\Release\netstandard2.0\Vostok.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Vstk.ClusterClient">
+    <Reference Include="Vostok.ClusterClient">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\vstk.clusterclient\Vstk.ClusterClient\bin\Release\netstandard2.0\Vstk.ClusterClient.dll</HintPath>
+      <HintPath>..\..\vostok.clusterclient\Vostok.ClusterClient\bin\Release\netstandard2.0\Vostok.ClusterClient.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

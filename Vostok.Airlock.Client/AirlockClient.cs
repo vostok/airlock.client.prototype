@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using Vstk.Commons.Synchronization;
-using Vstk.Logging;
-using Vstk.Logging.Logs;
+using Vostok.Commons.Synchronization;
+using Vostok.Logging;
+using Vostok.Logging.Logs;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public class AirlockClient : IAirlockClient, IDisposable
     {
