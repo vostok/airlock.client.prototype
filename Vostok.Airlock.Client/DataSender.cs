@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Vostok.Commons.Extensions.UnitConvertions;
-using Vostok.Commons.Synchronization;
 using Vostok.Logging;
 
 namespace Vostok.Airlock

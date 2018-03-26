@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using Vstk.Commons.Synchronization;
-using Vstk.Logging;
+using Vostok.Commons.Synchronization;
+using Vostok.Logging;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     internal class InternalAirlockClient
     {

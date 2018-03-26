@@ -1,6 +1,6 @@
-﻿using Vstk.Metrics.Meters;
+﻿using Vostok.Metrics.Meters;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public class AirlockClientCounters
     {
