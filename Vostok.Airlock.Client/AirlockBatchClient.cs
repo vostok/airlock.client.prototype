@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Vstk.Commons.Binary;
-using Vstk.Commons.Extensions.UnitConvertions;
-using Vstk.Logging;
+using Vostok.Commons.Binary;
+using Vostok.Logging;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public class AirlockBatchClient : IAirlockBatchClient
     {

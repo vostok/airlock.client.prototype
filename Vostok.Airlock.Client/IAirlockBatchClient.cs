@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public interface IAirlockBatchClient
     {

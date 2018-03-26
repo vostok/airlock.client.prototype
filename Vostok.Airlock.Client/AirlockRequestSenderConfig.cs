@@ -1,8 +1,8 @@
 ﻿using System;
-using Vstk.Clusterclient.Topology;
-using Vstk.Commons.Extensions.UnitConvertions;
+using Vostok.Clusterclient.Topology;
+using Vostok.Commons.Extensions.UnitConvertions;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public class AirlockRequestSenderConfig
     {

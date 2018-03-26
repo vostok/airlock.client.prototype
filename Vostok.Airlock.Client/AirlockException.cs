@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vstk.Airlock
+namespace Vostok.Airlock
 {
     public class AirlockException : Exception
     {

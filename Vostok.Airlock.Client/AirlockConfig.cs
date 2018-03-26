@@ -1,5 +1,4 @@
 ﻿using System;
-using Vostok.Clusterclient.Topology;
 using Vostok.Commons.Extensions.UnitConvertions;
 using Vostok.Commons.Model;
 
