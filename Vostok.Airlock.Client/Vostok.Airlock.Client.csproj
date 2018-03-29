@@ -13,6 +13,14 @@
     <PackageLicenseUrl>https://github.com/vostok/vostok.airlock.client/blob/master/LICENSE</PackageLicenseUrl>
     <Description>Client to airlock gate, see http://vostok.tools/</Description>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Vostok.Core">
       <SpecificVersion>False</SpecificVersion>

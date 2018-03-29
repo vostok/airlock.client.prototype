@@ -57,6 +57,25 @@ namespace Vostok.Airlock.Client.Tests.Logging
             }
         }
 
+        [Test]
+        public void FixNamesDoesNotThrowWhenMoluleIsNull()
+        {
+            /*
+           Real world sample:
+           at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+           at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+           at lambda_method(Closure , Object )
+           at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
+           */
+            var frame = new LogEventStackFrame
+            {
+                Function = "lambda_method", // 
+                Module = null
+            };
+            ExceptionParser.FixNames(frame);
+            Assert.That(frame.Module, Is.EqualTo(null));
+        }
+
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void MyGenericFunc<T>()
         {

@@ -69,28 +69,21 @@ namespace Vostok.Airlock.Logging
 
         private static LogEventStackFrame CreateLogEventStackFrame(StackFrame frame)
         {
-            var stackFrame = new LogEventStackFrame();
             var method = frame.GetMethod();
-            if (method != null)
+            var stackFrame = new LogEventStackFrame
             {
-                stackFrame.Module = method.DeclaringType != null ? method.DeclaringType.FullName : null;
-                stackFrame.Function = method.Name;
-                stackFrame.Source = method.ToString();
-            }
-            else
-            {
-                stackFrame.Module = "(unknown)";
-                stackFrame.Function = "(unknown)";
-                stackFrame.Source = "(unknown)";
-            }
-            stackFrame.Filename = frame.GetFileName();
-            stackFrame.LineNumber = frame.GetFileLineNumber();
-            stackFrame.ColumnNumber = frame.GetFileColumnNumber();
+                Module = method?.DeclaringType?.FullName ?? "(unknown)",
+                Function = method?.Name ?? "(unknown)",
+                Source = method?.ToString() ?? "(unknown)",
+                Filename = frame.GetFileName(),
+                LineNumber = frame.GetFileLineNumber(),
+                ColumnNumber = frame.GetFileColumnNumber()
+            };
             FixNames(stackFrame);
             return stackFrame;
         }
 
-        private static void FixNames(LogEventStackFrame stackFrame)
+        internal static void FixNames(LogEventStackFrame stackFrame)
         {
             if (stackFrame.Function == "MoveNext")
             {
@@ -104,6 +97,8 @@ namespace Vostok.Airlock.Logging
             var matchLambda = lambdaRegex.Match(stackFrame.Function);
             if (matchLambda.Success)
                 stackFrame.Function = matchLambda.Groups[1].Value + " { <lambda> }";
+            if (stackFrame.Module == null)
+                return;
             if (stackFrame.Module.EndsWith(".<>c") || stackFrame.Module.EndsWith("+<>c"))
                 stackFrame.Module = stackFrame.Module.Substring(0, stackFrame.Module.Length - 4);
         }
