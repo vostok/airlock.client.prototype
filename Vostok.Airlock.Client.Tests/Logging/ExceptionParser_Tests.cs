@@ -58,7 +58,7 @@ namespace Vostok.Airlock.Client.Tests.Logging
         }
 
         [Test]
-        public void FixNamesDoesNotThrowWhenMoluleIsNull()
+        public void FixNamesDoesNotThrowWhenModuleIsNull()
         {
             /*
            Real world sample:
