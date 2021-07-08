@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Vostok.Commons.Synchronization;
 
 namespace Vostok.Airlock
 {
@@ -6,7 +7,7 @@ namespace Vostok.Airlock
     {
         private readonly int initialBuffersSize;
         private readonly long maxMemoryForBuffers;
-        private long currentSize;
+        private readonly AtomicLong currentSize = new AtomicLong(0);
 
         public MemoryManager(long maxMemoryForBuffers, int initialBuffersSize)
         {
@@ -23,15 +24,12 @@ namespace Vostok.Airlock
         {
             while (true)
             {
-                var tCurrentSize = currentSize;
+                var tCurrentSize = currentSize.Value;
                 var newSize = tCurrentSize + amount;
                 if (newSize <= maxMemoryForBuffers)
                 {
-                    var originalValue = Interlocked.CompareExchange(ref currentSize, newSize, tCurrentSize);
-                    if (originalValue == tCurrentSize)
-                    {
+                    if (currentSize.TrySet(newSize, tCurrentSize))
                         return true;
-                    }
                 }
                 else
                 {

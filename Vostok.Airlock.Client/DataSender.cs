@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Vostok.Commons.Extensions.UnitConvertions;
-using Vostok.Commons.Synchronization;
 using Vostok.Logging;
 
 namespace Vostok.Airlock
@@ -12,22 +11,19 @@ namespace Vostok.Airlock
         private readonly IDataBatchesFactory batchesFactory;
         private readonly IRequestSender requestSender;
         private readonly ILog log;
-        private readonly AtomicLong lostItemsCounter;
-        private readonly AtomicLong sentItemsCounter;
+        private readonly AirlockClientCounters counters;
         private readonly BufferSliceTracker slicesTracker;
 
         public DataSender(
             IDataBatchesFactory batchesFactory, 
             IRequestSender requestSender, 
-            ILog log, 
-            AtomicLong lostItemsCounter,
-            AtomicLong sentItemsCounter)
+            ILog log,
+            AirlockClientCounters counters)
         {
             this.batchesFactory = batchesFactory;
             this.requestSender = requestSender;
             this.log = log;
-            this.lostItemsCounter = lostItemsCounter;
-            this.sentItemsCounter = sentItemsCounter;
+            this.counters = counters;
 
             slicesTracker = new BufferSliceTracker();
         }
@@ -48,10 +44,10 @@ namespace Vostok.Airlock
                     return DataSendResult.Backoff;
 
                 if (result == RequestSendResult.Success)
-                    sentItemsCounter.Add(batch.ItemsCount);
+                    counters.SentItems.Add(batch.ItemsCount);
 
                 if (result == RequestSendResult.DefinitiveFailure)
-                    lostItemsCounter.Add(batch.ItemsCount);
+                    counters.LostItems.Add(batch.ItemsCount);
                 
                 TryDiscardSnapshots(batch);
             }
